@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>加入 Ace League</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f5f7;
+      --surface: #fff;
+      --text: #171719;
+      --secondary: #636366;
+      --accent: #0a7c5b;
+      --line: #dedee3;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000;
+        --surface: #171719;
+        --text: #f5f5f7;
+        --secondary: #aeaeb2;
+        --accent: #46c89a;
+        --line: #38383a;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+    }
+    main {
+      max-width: 720px;
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 48px 24px 72px;
+      background: var(--surface);
+    }
+    h1 { margin: 0 0 8px; font-size: 30px; line-height: 1.2; }
+    p { margin: 0 0 20px; color: var(--secondary); }
+    .code {
+      display: inline-flex;
+      align-items: center;
+      min-height: 48px;
+      margin: 8px 0 20px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font: inherit;
+      font-weight: 600;
+    }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+<main>
+  <h1>加入 Ace League</h1>
+  <p>打开 Ace League 后，选择“加入联赛”，输入下面的邀请码即可浏览联赛。</p>
+  <div class="code" id="inviteCode">未找到邀请码</div>
+  <p><button id="copyButton" type="button">复制邀请码</button></p>
+  <p>如需绑定球员身份、提交比分或管理赛事，App 会在对应操作时再要求 Apple 登录。</p>
+  <p><a href="../">查看 Ace League 法律与隐私信息</a></p>
+</main>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const code = (params.get("code") || "").trim().toUpperCase();
+  const codeElement = document.getElementById("inviteCode");
+  const copyButton = document.getElementById("copyButton");
+
+  if (code) {
+    codeElement.textContent = code;
+  }
+
+  copyButton.addEventListener("click", async () => {
+    if (!code) return;
+    try {
+      await navigator.clipboard.writeText(code);
+      copyButton.textContent = "已复制";
+    } catch {
+      copyButton.textContent = "请手动复制";
+    }
+  });
+</script>
+</body>
+</html>
